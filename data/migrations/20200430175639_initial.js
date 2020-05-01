@@ -48,8 +48,8 @@ exports.up = async function(knex) {
         await knex.schema.createTable("steps", (table) => {
             table.increments("id")
             table.integer("recipe_id").references("id").inTable("recipes").notNullable().onUpdate("CASCADE").onDelete("CASCADE")
-            table.integer("step_number").notNullable().unique()
-            table.text("instructions")
+            table.integer("step_number").notNullable()
+            table.text("directions")
         })
     
     
