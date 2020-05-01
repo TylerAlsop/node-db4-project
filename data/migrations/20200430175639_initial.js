@@ -18,8 +18,8 @@ exports.up = async function(knex) {
     
         await knex.schema.createTable("ingredients", (table) => {
             table.increments("id")
-            table.text("name").notNullable()
-            table.float("quantity_id")
+            table.text("ingredient").notNullable()
+            table.integer("quantities_id")
                 .references("id")
                 .inTable("quantities")
                 .onDelete("SET NULL")
