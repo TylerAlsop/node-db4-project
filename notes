@@ -7,13 +7,23 @@ exports.up = async function(knex) {
         table.text("name").notNullable()
     })
 
+/////////////// quantities ///////////////
+
+    await knex.schema.createTable("quantities", (table) => {
+        table.increments("id")
+        table.float("amount").notNullable()
+    })
 
 /////////////// ingredients ///////////////
 
     await knex.schema.createTable("ingredients", (table) => {
         table.increments("id")
         table.text("name").notNullable()
-        table.float("quantity")
+        table.float("quantity_id")
+            .references("id")
+            .inTable("quantities")
+            .onDelete("SET NULL")
+            .onUpdate("CASCADE")
     })
 
 /////////////// ingredients_recipies ///////////////
@@ -47,6 +57,7 @@ exports.down = async function(knex) {
     await knex.schema.dropTableIfExists("steps")
     await knex.schema.dropTableIfExists("ingredients_recipies")
     await knex.schema.dropTableIfExists("ingredients")
+    await knex.schema.dropTableIfExists("quantities")
     await knex.schema.dropTableIfExists("recipies")
 
 };
